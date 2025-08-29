@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,30 +12,40 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Welcome_Screen extends AppCompatActivity {
+public class suites_intro extends AppCompatActivity {
 
-    Button explore_btn;
+    ImageButton back_wc_btn, next_pi_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_welcome_screen);
+        setContentView(R.layout.activity_suites_intro);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        explore_btn = findViewById(R.id.Explore_Btn);
+        back_wc_btn = findViewById(R.id.Back_WC_BTN);
+        next_pi_btn = findViewById(R.id.Next_PI_BTN);
 
-        explore_btn.setOnClickListener(new View.OnClickListener() {
+        back_wc_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Welcome_Screen.this, suites_intro.class);
+                Intent intent = new Intent(suites_intro.this, Welcome_Screen.class);
                 startActivity(intent);
+
+                finish();
             }
         });
 
+        next_pi_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(suites_intro.this, poolside_intro.class);
+                startActivity(intent2);
+            }
+        });
     }
 }

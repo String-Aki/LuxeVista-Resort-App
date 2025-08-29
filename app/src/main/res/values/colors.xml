@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="splash_bg">#DED4CA</color>
+    <color name="transparent">#00000000</color>
+    <color name="hint_color">#808080</color>
+    <color name="field_bg">#A5FFFFFF</color>
 </resources>

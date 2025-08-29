@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".login">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="388dp"
+        android:layout_height="500dp"
+        app:cardBackgroundColor="#99FFFFFF"
+        app:cardCornerRadius="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/aladin_regular"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:text="@string/brand_name" />
+
+                <Button
+                    android:id="@+id/SignUp_BTN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/playfairdisplay_medium"
+                    android:background="@color/transparent"
+                    android:textColor="@color/hint_color"
+                    android:textSize="20sp"
+                    android:text="@string/sign_up" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/login_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="72dp"
+                android:fontFamily="@font/playfairdisplay_medium"
+                android:gravity="center_vertical"
+                android:text="@string/login_label"
+                android:textColor="@color/black"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/edit_text_bg"
+                android:fontFamily="@font/playfairdisplay_regular"
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textColorHint="@color/hint_color"
+                android:drawableStart="@drawable/at_sign"
+                />
+
+            <EditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_bg"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textColorHint="@color/hint_color"
+                android:drawableStart="@drawable/key"
+                />
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="#5CFFFFFF"
+                android:text="@string/login_btn"
+                android:fontFamily="@font/playfairdisplay_bold"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

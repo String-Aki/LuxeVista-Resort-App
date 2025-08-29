@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/front_office"
+    android:background="@drawable/spa"
     android:orientation="vertical"
     android:gravity="bottom"
-    tools:context=".Welcome_Screen">
+    tools:context=".spa_intro">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -23,8 +23,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
 
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,44 +33,50 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-
             <TextView
                 android:id="@+id/Welcome_Msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textSize="25sp"
+                android:textSize="24sp"
                 android:fontFamily="@font/playfairdisplay_bold"
                 android:textColor="@color/white"
-                android:text="Welcome To LuxeVista Resort"
+                android:text="Unwind and restore with our curated wellness experiences"
                 android:layout_marginBottom="4dp"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                />
 
-            <TextView
-                android:id="@+id/Welcome_Msg_2"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/playfairdisplay_bold"
-                android:text="Exclusive Services, Endless Vista"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:ignore="HardcodedText" />
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="16dp">
 
-            <Button
-                android:id="@+id/Explore_Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#00FFFFFF"
-                app:strokeColor="@color/white"
-                app:strokeWidth="2dp"
-                android:fontFamily="@font/playfairdisplay_bold"
-                android:text="Explore"
-                tools:ignore="HardcodedText" />
+                <ImageButton
+                    android:id="@+id/Back_PI_BTN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="@color/transparent"
+                    android:contentDescription="back_button"
+                    app:srcCompat="@drawable/arrow_left_circle"
+                    android:paddingEnd="16dp"
+                    tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/Next_FI_BTN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:contentDescription="next_button"
+                    app:srcCompat="@drawable/arrow_right_circle"
+                    tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
-
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

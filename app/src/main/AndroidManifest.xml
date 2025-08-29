@@ -13,6 +13,21 @@
         android:theme="@style/Theme.LuxeVistaResortApp"
         tools:targetApi="31">
         <activity
+            android:name=".login"
+            android:exported="false" />
+        <activity
+            android:name=".food_intro"
+            android:exported="false" />
+        <activity
+            android:name=".spa_intro"
+            android:exported="false" />
+        <activity
+            android:name=".poolside_intro"
+            android:exported="false" />
+        <activity
+            android:name=".suites_intro"
+            android:exported="false" />
+        <activity
             android:name=".Welcome_Screen"
             android:exported="false" />
         <activity
