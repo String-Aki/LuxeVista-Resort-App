@@ -16,8 +16,9 @@
         android:layout_height="200dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        app:cardBackgroundColor="#4CFFFFFF"
+        app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
+            android:background="@drawable/blur_gradient"
             android:orientation="vertical"
             android:padding="24dp">
 
@@ -63,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#00FFFFFF"
+                android:backgroundTint="#1aFFFFFF"
                 app:strokeColor="@color/white"
                 app:strokeWidth="2dp"
                 android:fontFamily="@font/playfairdisplay_bold"

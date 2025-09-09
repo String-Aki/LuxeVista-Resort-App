@@ -33,9 +33,6 @@ public class suites_intro extends AppCompatActivity {
         back_wc_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(suites_intro.this, Welcome_Screen.class);
-                startActivity(intent);
-
                 finish();
             }
         });

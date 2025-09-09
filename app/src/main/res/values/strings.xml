@@ -6,4 +6,7 @@
     <string name="email_hint">e-mail address</string>
     <string name="password_hint">password</string>
     <string name="login_btn">login</string>
+    <string name="sign_up_btn">sign up</string>
+    <string name="last_name_hint">last name</string>
+    <string name="first_name_hint">first name</string>
 </resources>

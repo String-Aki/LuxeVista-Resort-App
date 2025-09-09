@@ -32,8 +32,6 @@ public class poolside_intro extends AppCompatActivity {
         back_si_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(poolside_intro.this, suites_intro.class);
-                startActivity(intent);
                 finish();
             }
         });

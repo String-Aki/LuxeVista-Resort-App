@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class food_intro extends AppCompatActivity {
 
-    Button login_btn, register_btn;
+    Button loginpage_btn, registerpage_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +27,23 @@ public class food_intro extends AppCompatActivity {
             return insets;
         });
 
-        login_btn = findViewById(R.id.Login_Btn);
-        register_btn = findViewById(R.id.Register_Btn);
+        loginpage_btn = findViewById(R.id.LoginPage_Btn);
+        registerpage_btn = findViewById(R.id.RegisterPage_Btn);
 
-        login_btn.setOnClickListener(new View.OnClickListener() {
+        loginpage_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(food_intro.this, login.class);
                 startActivity(intent);
             }
+        });
+
+        registerpage_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(food_intro.this, sign_up.class);
+                startActivity(intent);
+                }
         });
 
     }

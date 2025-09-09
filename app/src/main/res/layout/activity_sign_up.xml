@@ -5,15 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash"
+    android:background="@drawable/sign_up_cover"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".login">
-
+    tools:context=".sign_up">
 
     <androidx.cardview.widget.CardView
         android:layout_width="388dp"
-        android:layout_height="500dp"
+        android:layout_height="550dp"
         app:cardBackgroundColor="#99FFFFFF"
         app:cardElevation="0dp"
         app:cardCornerRadius="50dp">
@@ -30,7 +29,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/Brand_Name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -40,30 +39,68 @@
                     android:text="@string/brand_name" />
 
                 <Button
-                    android:id="@+id/SignUp_Inst"
+                    android:id="@+id/Login_Inst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/playfairdisplay_medium"
                     android:background="@color/transparent"
                     android:textColor="@color/hint_color"
                     android:textSize="20sp"
-                    android:text="@string/sign_up" />
+                    android:text="@string/login_label" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/login_label"
+                android:id="@+id/SignUp_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="72dp"
                 android:fontFamily="@font/playfairdisplay_medium"
                 android:gravity="center_vertical"
-                android:text="@string/login_label"
+                android:text="@string/sign_up"
                 android:textColor="@color/black"
                 android:textSize="34sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/FirstName_EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/first_name_hint"
+                    android:inputType="textPersonName"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/hint_color" />
+
+                <EditText
+                    android:id="@+id/LastName_EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/last_name_hint"
+                    android:inputType="textPersonName"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/hint_color" />
+
+            </LinearLayout>
+
             <EditText
-                android:id="@+id/Email_EditText_Login"
+                android:id="@+id/Email_EditText_SignUp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="24dp"
@@ -80,7 +117,7 @@
                 />
 
             <EditText
-                android:id="@+id/Password_EditText_Login"
+                android:id="@+id/Password_EditText_SignUp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
@@ -97,13 +134,13 @@
                 />
 
             <Button
-                android:id="@+id/login_btn"
+                android:id="@+id/SignUp_Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_gravity="end"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="#5CFFFFFF"
-                android:text="@string/login_btn"
+                android:text="@string/sign_up_btn"
                 android:fontFamily="@font/playfairdisplay_bold"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -111,4 +148,5 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

@@ -32,8 +32,6 @@ public class spa_intro extends AppCompatActivity {
         back_pi_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(spa_intro.this, poolside_intro.class);
-                startActivity(intent);
                 finish();
             }
         });
