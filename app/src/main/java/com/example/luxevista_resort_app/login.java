@@ -8,11 +8,11 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -57,6 +57,10 @@ public class login extends AppCompatActivity {
             }
         });
 
+        binding.forgotPasswordText.setOnClickListener(v -> {
+            showForgotPasswordDialog();
+        });
+
         binding.PasswordEditTextLogin.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
@@ -75,6 +79,41 @@ public class login extends AppCompatActivity {
         });
 
 
+    }
+
+    private void showForgotPasswordDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Reset Password");
+        builder.setMessage("Enter your registered email address to receive a password reset link.");
+
+        final EditText emailInput = new EditText(this);
+        emailInput.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        builder.setView(emailInput);
+
+        builder.setPositiveButton("Send", (dialog, which) -> {
+            String email = emailInput.getText().toString().trim();
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
+            } else {
+                sendPasswordResetEmail(email);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.create().show();
+    }
+
+    private void sendPasswordResetEmail(String email) {
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Password reset link sent to your email.", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Failed to send reset email. Please check if the email is registered.", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void togglePasswordVisibility(EditText editText){
