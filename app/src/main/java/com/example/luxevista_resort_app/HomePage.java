@@ -9,6 +9,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.luxevista_resort_app.databinding.ActivityHomePageBinding;
 
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServiceClickListener {
+public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServiceClickListener, SuiteAdapter.OnSuiteClickListener {
 
     private ActivityHomePageBinding binding;
 
@@ -35,8 +38,10 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
         });
 
         setupServicesRecyclerView();
+        setupSuitesViewPager();
     }
 
+// Inhouse Services Displaying and Managing Methods
     private void setupServicesRecyclerView() {
 
         List<Service> services = new ArrayList<>();
@@ -91,4 +96,91 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
             startActivity(intent);
         }
     }
+
+    //Suite Displaying and Managing Methods
+    private void setupSuitesViewPager() {
+        List<Suite> suites = new ArrayList<>();
+        suites.add(new Suite("Oceanfront Terrace Suite",
+                R.drawable.img_oceanview_suite,
+                "$950/night",
+                List.of(
+                        "Experience breathtaking, panoramic vistas of the sparkling ocean from your expansive private terrace.",
+                        "Designed for ultimate relaxation, this suite blurs the lines between its luxurious interior and the natural beauty outside.",
+                        "Features plush, oversized modular seating perfect for lounging, entertaining, or simply soaking in the serene coastal atmosphere.",
+                        "Adorned with natural materials, a soothing neutral palette, and thoughtful touches like a woven pendant light, creating a sophisticated yet relaxed beach house feel.")
+        ));
+        suites.add(new Suite("Executive Suite",
+                R.drawable.img_dulexe_suite_2,
+                "$450/night",
+                List.of(
+                        "Experience modern luxury in this meticulously designed suite, featuring a minimalist aesthetic with clean lines and premium materials.",
+                        "Unwind on a plush, low-profile king bed dressed in high-thread-count linens for an exceptional night's sleep.",
+                        "The room boasts a perfectly balanced layout, with designer pendant lighting and matching bedside tables creating a harmonious and calming atmosphere.",
+                        "Luxury en-suite bathroom featuring a rainfall shower, designer toiletries, and soft bathrobes.")
+        ));
+        suites.add(new Suite("Deluxe Suite",
+                R.drawable.img_dulexe_suite,
+                "$375/night",
+                List.of(
+                        "This suite offers a classic and refined decor, featuring rich wood furnishings and a soothing, neutral color palette.",
+                        "Sink into our signature king bed with a stately upholstered headboard and crisp, white linens.",
+                        "Large windows, dressed with both sheer and blackout curtains, allow for beautiful natural light or complete privacy.",
+                        "This room is perfect for travelers who appreciate traditional luxury and a cozy, inviting atmosphere.")
+        ));
+        suites.add(new Suite("Sunlit Double Room",
+                R.drawable.img_double_br,
+                "$310/night",
+                List.of(
+                        "Bright, airy, and filled with natural elements, this room is designed for relaxation and rejuvenation.",
+                        "The room is centered around a beautifully crafted, light-wood bed frame with soft, neutral-toned bedding.",
+                        "Expansive windows allow sunlight to pour in, creating a warm and uplifting environment throughout the day.")
+        ));
+        suites.add(new Suite("Superior Queen Room",
+                R.drawable.img_standard_suite,
+                "$250/night",
+                List.of(
+                        "This room combines minimalist design with classic European architectural details",
+                        "Features a comfortable, low-profile upholstered queen bed with a relaxed, layered throw blanket.",
+                        "The intimate and thoughtfully curated space feels more like a private Parisian apartment than a hotel room.")
+        ));
+
+        SuiteAdapter suiteAdapter = new SuiteAdapter(suites, this);
+        binding.suitesViewPager.setAdapter(suiteAdapter);
+
+        binding.suitesViewPager.setClipToPadding(false);
+        binding.suitesViewPager.setClipChildren(false);
+        binding.suitesViewPager.setOffscreenPageLimit(3);
+
+        CompositePageTransformer compositeTransformer = new CompositePageTransformer();
+
+        compositeTransformer.addTransformer(new MarginPageTransformer(20));
+        compositeTransformer.addTransformer((page, position) -> {
+            float r = 1 - Math.abs(position);
+            page.setScaleY(0.85f + r * 0.15f);
+        });
+
+        binding.suitesViewPager.setPageTransformer(compositeTransformer);
+
+        binding.textViewSuitesTitle.setText(suites.get(0).getName());
+
+        binding.suitesViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                Suite currentSuite = suites.get(position);
+
+                binding.textViewSuitesTitle.setText(currentSuite.getName());
+            }
+        });
+    }
+
+    public void onSuiteClick(Suite suite) {
+
+        Intent intent = new Intent(this, SuiteDetailActivity.class);
+        intent.putExtra(SuiteDetailActivity.EXTRA_SUITE_DETAILS, suite);
+        startActivity(intent);
+    }
 }
+
+
