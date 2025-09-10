@@ -1,5 +1,6 @@
 package com.example.luxevista_resort_app;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.luxevista_resort_app.databinding.ActivityFineDiningBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -24,6 +28,9 @@ public class FineDiningActivity extends AppCompatActivity {
     private ActivityFineDiningBinding binding;
 
     private Service service;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,9 @@ public class FineDiningActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         if (getIntent().hasExtra(EXTRA_DINING_DETAILS)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -115,7 +125,30 @@ public class FineDiningActivity extends AppCompatActivity {
     private void setupClickListeners() {
         binding.backButton.setOnClickListener(v -> finish());
         binding.reserveButton.setOnClickListener(v -> {
-            Toast.makeText(this, binding.reserveButton.getText().toString() + "!", Toast.LENGTH_SHORT).show();
+            makeDiningReservation();
         });
+    }
+
+    private void makeDiningReservation() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            String reservationDetails = binding.reserveButton.getText().toString();
+
+            Reservation reservation = new Reservation(userId, reservationDetails, "Confirmed");
+
+            db.collection("reservations")
+                    .add(reservation)
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(this, "Reservation confirmed!", Toast.LENGTH_LONG).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to make reservation.", Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(this, "You must be logged in to make a reservation.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, login.class);
+            startActivity(intent);
+        }
     }
 }

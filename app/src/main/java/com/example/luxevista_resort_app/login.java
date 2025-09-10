@@ -46,9 +46,9 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //loginUser();
-                Intent intent = new Intent(login.this, HomePage.class);
-                startActivity(intent);
+                loginUser();
+                //Intent intent = new Intent(login.this, HomePage.class);
+                //startActivity(intent);
             }
         });
 
