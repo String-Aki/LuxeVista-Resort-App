@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -91,14 +90,14 @@ public class sign_up extends AppCompatActivity {
 
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
-            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.eye_off);
+            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.ico_hint_eye_off);
             editText.setCompoundDrawablesWithIntrinsicBounds(leftIcon, null, rightIcon, null);
 
         }
         else{
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.eye);
+            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.ico_hint_eye);
             editText.setCompoundDrawablesWithIntrinsicBounds(leftIcon, null, rightIcon, null);
         }
         editText.setSelection(editText.getText().length());

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/spa"
+    android:background="@drawable/img_intro_spa"
     android:orientation="vertical"
     android:gravity="bottom"
     tools:context=".spa_intro">
@@ -30,7 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/blur_gradient"
+            android:background="@drawable/drw_res_blur_gradient"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="24dp">
@@ -62,7 +62,7 @@
                     android:layout_gravity="end"
                     android:background="@color/transparent"
                     android:contentDescription="back_button"
-                    app:srcCompat="@drawable/arrow_left_circle"
+                    app:srcCompat="@drawable/ico_white_arrow_left_circle"
                     android:paddingEnd="16dp"
                     tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:contentDescription="next_button"
-                    app:srcCompat="@drawable/arrow_right_circle"
+                    app:srcCompat="@drawable/ico_white_arrow_right_circle"
                     tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
 
             </LinearLayout>

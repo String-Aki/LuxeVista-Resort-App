@@ -45,7 +45,10 @@ public class login extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginUser();
+
+                //loginUser();
+                Intent intent = new Intent(login.this, HomePage.class);
+                startActivity(intent);
             }
         });
 
@@ -123,14 +126,14 @@ public class login extends AppCompatActivity {
 
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
-            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.eye_off);
+            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.ico_hint_eye_off);
             editText.setCompoundDrawablesWithIntrinsicBounds(leftIcon, null, rightIcon, null);
 
         }
         else{
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.eye);
+            Drawable rightIcon = ContextCompat.getDrawable(this, R.drawable.ico_hint_eye);
             editText.setCompoundDrawablesWithIntrinsicBounds(leftIcon, null, rightIcon, null);
         }
         editText.setSelection(editText.getText().length());

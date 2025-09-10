@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sign_up_cover"
+    android:background="@drawable/img_sign_up_cover"
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".sign_up">
@@ -73,7 +73,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/edit_text_bg"
+                    android:background="@drawable/drw_res_edit_text_bg"
                     android:hint="@string/first_name_hint"
                     android:inputType="textPersonName"
                     android:paddingStart="16dp"
@@ -88,7 +88,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:background="@drawable/edit_text_bg"
+                    android:background="@drawable/drw_res_edit_text_bg"
                     android:hint="@string/last_name_hint"
                     android:inputType="textPersonName"
                     android:paddingStart="16dp"
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/edit_text_bg"
+                android:background="@drawable/drw_res_edit_text_bg"
                 android:fontFamily="@font/playfairdisplay_regular"
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
@@ -113,7 +113,7 @@
                 android:textColor="@color/black"
                 android:textAlignment="center"
                 android:textColorHint="@color/hint_color"
-                android:drawableStart="@drawable/at_sign"
+                android:drawableStart="@drawable/ico_hint_at_sign"
                 />
 
             <EditText
@@ -121,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/edit_text_bg"
+                android:background="@drawable/drw_res_edit_text_bg"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:paddingStart="16dp"
@@ -130,7 +130,7 @@
                 android:textAlignment="center"
                 android:textColorHint="@color/hint_color"
                 android:drawableStart="@drawable/key"
-                android:drawableEnd="@drawable/eye"
+                android:drawableEnd="@drawable/ico_hint_eye"
                 />
 
             <Button
