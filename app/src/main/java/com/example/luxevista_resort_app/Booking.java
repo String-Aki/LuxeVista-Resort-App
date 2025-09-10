@@ -12,11 +12,12 @@ public class Booking {
     private int adultsCount;
     private int childrenCount;
     private String status;
+    private int imageResId;
     @ServerTimestamp
     private Date bookingDate;
     public Booking() {}
 
-    public Booking(String userId, String suiteName, Date checkInDate, Date checkOutDate, int adultsCount, int childrenCount, String status) {
+    public Booking(String userId, String suiteName, Date checkInDate, Date checkOutDate, int adultsCount, int childrenCount, String status, int imageResId) {
         this.userId = userId;
         this.suiteName = suiteName;
         this.checkInDate = checkInDate;
@@ -24,6 +25,7 @@ public class Booking {
         this.adultsCount = adultsCount;
         this.childrenCount = childrenCount;
         this.status = status;
+        this.imageResId = imageResId;
     }
 
     // --- Getters ---
@@ -35,4 +37,6 @@ public class Booking {
     public int getChildrenCount() { return childrenCount; }
     public String getStatus() { return status; }
     public Date getBookingDate() { return bookingDate; }
+
+    public int getImageResId() { return imageResId; }
 }

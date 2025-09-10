@@ -8,15 +8,17 @@ public class Reservation {
     private String userId;
     private String serviceName;
     private String status;
+    private int imageResId;
     @ServerTimestamp
     private Date reservationDate;
 
     public Reservation() {}
 
-    public Reservation(String userId, String serviceName, String status) {
+    public Reservation(String userId, String serviceName, String status, int imageResId) {
         this.userId = userId;
         this.serviceName = serviceName;
         this.status = status;
+        this.imageResId = imageResId;
     }
 
     public String getUserId() {
@@ -33,5 +35,9 @@ public class Reservation {
 
     public Date getReservationDate() {
         return reservationDate;
+    }
+
+    public int getImageResId() {
+        return imageResId;
     }
 }

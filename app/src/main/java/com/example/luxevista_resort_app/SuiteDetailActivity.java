@@ -70,7 +70,7 @@ public class SuiteDetailActivity extends AppCompatActivity {
         });
 
         binding.bookNowButton.setOnClickListener(v -> {
-            BookingBottomSheetFragment bookingSheet = BookingBottomSheetFragment.newInstance(suite.getName());
+            BookingBottomSheetFragment bookingSheet = BookingBottomSheetFragment.newInstance(suite.getName(), suite.getImageResId());
             bookingSheet.show(getSupportFragmentManager(), bookingSheet.getTag());
         });
     }

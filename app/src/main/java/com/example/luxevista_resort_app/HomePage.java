@@ -2,6 +2,7 @@ package com.example.luxevista_resort_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
 
         setupServicesRecyclerView();
         setupSuitesViewPager();
+        setupClickListeners();
     }
 
 // Inhouse Services Displaying and Managing Methods
@@ -180,6 +182,23 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
         Intent intent = new Intent(this, SuiteDetailActivity.class);
         intent.putExtra(SuiteDetailActivity.EXTRA_SUITE_DETAILS, suite);
         startActivity(intent);
+    }
+
+    private void setupClickListeners() {
+        binding.imageViewProfile.setOnClickListener(v -> {
+            Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
+        });
+
+        binding.navSettingsIcon.setOnClickListener(v ->
+                Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show());
+
+        binding.navHomeIcon.setOnClickListener(v ->
+                Toast.makeText(this, "Home clicked!", Toast.LENGTH_SHORT).show());
+
+        binding.navBookingsIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MyOrdersActivity.class);
+            startActivity(intent);
+        });
     }
 }
 

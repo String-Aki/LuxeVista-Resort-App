@@ -95,7 +95,7 @@ public class ServiceDetailActivity extends AppCompatActivity {
             String userId = currentUser.getUid();
             String serviceName = service.getName();
 
-            Reservation reservation = new Reservation(userId, serviceName, "Pending");
+            Reservation reservation = new Reservation(userId, serviceName, "Pending",service.getImageResId());
 
             db.collection("reservations")
                     .add(reservation)

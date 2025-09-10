@@ -135,7 +135,7 @@ public class FineDiningActivity extends AppCompatActivity {
             String userId = currentUser.getUid();
             String reservationDetails = binding.reserveButton.getText().toString();
 
-            Reservation reservation = new Reservation(userId, reservationDetails, "Confirmed");
+            Reservation reservation = new Reservation(userId, reservationDetails, "Pending", service.getImageResId());
 
             db.collection("reservations")
                     .add(reservation)
