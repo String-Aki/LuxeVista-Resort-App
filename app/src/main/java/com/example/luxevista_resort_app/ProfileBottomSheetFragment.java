@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -90,6 +91,10 @@ public class ProfileBottomSheetFragment extends BottomSheetDialogFragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             dismiss();
+        });
+
+        binding.deleteAccountButton.setOnClickListener(v -> {
+            showDeleteConfirmationDialog();
         });
     }
 
@@ -209,4 +214,49 @@ public class ProfileBottomSheetFragment extends BottomSheetDialogFragment {
         isEditMode = true;
         binding.updateButton.setText("Save");
     }
+
+    private void showDeleteConfirmationDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Delete Account")
+                .setMessage("Are you sure you want to permanently delete your account? This action cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    deleteUserAccount();
+                })
+                .setNegativeButton("Cancel", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void deleteUserAccount() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(getContext(), "No user is logged in.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String userId = currentUser.getUid();
+
+        // Step 1: Delete user data from Firestore
+        db.collection("users").document(userId).delete()
+                .addOnSuccessListener(aVoid -> {
+                    // Step 2: If Firestore data is deleted, delete the user from Authentication
+                    currentUser.delete()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getContext(), "Account deleted successfully.", Toast.LENGTH_LONG).show();
+                                    // Navigate back to the login screen
+                                    Intent intent = new Intent(getActivity(), login.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    dismiss();
+                                } else {
+                                    // This often fails if the user hasn't logged in recently
+                                    Toast.makeText(getContext(), "Failed to delete account. Please log in again and try immediately.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to delete user data. Please try again.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 }
