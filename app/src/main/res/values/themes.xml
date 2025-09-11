@@ -19,5 +19,10 @@
         <item name="cornerSizeBottomRight">15dp</item>
     </style>
 
+    <style name="ShapeAppearance.App.CircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="Theme.LuxeVistaResortApp" parent="Base.Theme.LuxeVistaResortApp" />
 </resources>

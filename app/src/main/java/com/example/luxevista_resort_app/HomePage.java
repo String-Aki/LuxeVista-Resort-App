@@ -102,7 +102,7 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
     //Suite Displaying and Managing Methods
     private void setupSuitesViewPager() {
         List<Suite> suites = new ArrayList<>();
-        suites.add(new Suite("Oceanfront Terrace Suite",
+        suites.add(new Suite("Oceanfront Suite",
                 R.drawable.img_oceanview_suite,
                 "$950/night",
                 List.of(
@@ -185,10 +185,6 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
     }
 
     private void setupClickListeners() {
-        binding.imageViewProfile.setOnClickListener(v -> {
-            Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
-        });
-
         binding.navSettingsIcon.setOnClickListener(v ->
                 Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show());
 
@@ -198,6 +194,11 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
         binding.navBookingsIcon.setOnClickListener(v -> {
             Intent intent = new Intent(this, MyOrdersActivity.class);
             startActivity(intent);
+        });
+
+        binding.imageViewProfile.setOnClickListener(v -> {
+            ProfileBottomSheetFragment profileSheet = new ProfileBottomSheetFragment();
+            profileSheet.show(getSupportFragmentManager(), profileSheet.getTag());
         });
     }
 }

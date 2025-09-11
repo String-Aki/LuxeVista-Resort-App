@@ -58,19 +58,16 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
         }
         String userId = currentUser.getUid();
 
-        // Create tasks for both queries
         Task<QuerySnapshot> bookingsTask = db.collection("bookings").whereEqualTo("userId", userId).get();
         Task<QuerySnapshot> reservationsTask = db.collection("reservations").whereEqualTo("userId", userId).get();
 
-        // Wait for both tasks to complete successfully
         Tasks.whenAllSuccess(bookingsTask, reservationsTask).addOnSuccessListener(results -> {
-            // 1. Create ONE single list to hold all our items (headings and orders).
             List<Object> combinedList = new ArrayList<>();
 
             // Process bookings result
             QuerySnapshot bookingsSnapshot = (QuerySnapshot) results.get(0);
             if (!bookingsSnapshot.isEmpty()) {
-                combinedList.add("Suite Bookings"); // Add the heading
+                combinedList.add("Suite Bookings");
                 for (DocumentSnapshot document : bookingsSnapshot.getDocuments()) {
                     Booking booking = document.toObject(Booking.class);
                     if (booking != null) {
@@ -87,7 +84,7 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
             // Process reservations result
             QuerySnapshot reservationsSnapshot = (QuerySnapshot) results.get(1);
             if (!reservationsSnapshot.isEmpty()) {
-                combinedList.add("In-house Reservations"); // Add the heading
+                combinedList.add("In-house Reservations");
                 for (DocumentSnapshot document : reservationsSnapshot.getDocuments()) {
                     Reservation reservation = document.toObject(Reservation.class);
                     if (reservation != null) {
@@ -105,14 +102,12 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
     }
 
     private void setupRecyclerView(List<Object> combinedList) {
-        // 2. Set up our single RecyclerView with the combined list.
         binding.ordersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         OrderAdapter adapter = new OrderAdapter(combinedList, this);
         binding.ordersRecyclerView.setAdapter(adapter);
     }
 
     private void updateEmptyState(boolean show) {
-        // 3. Correctly show/hide the main RecyclerView and the empty state text.
         if (show) {
             binding.emptyStateText.setVisibility(View.VISIBLE);
             binding.ordersRecyclerView.setVisibility(View.GONE);
@@ -137,7 +132,7 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
                             .delete()
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(this, "Order cancelled successfully.", Toast.LENGTH_SHORT).show();
-                                fetchOrdersAndReservations(); // Refresh the list from the database
+                                fetchOrdersAndReservations();
                             })
                             .addOnFailureListener(e -> Toast.makeText(this, "Failed to cancel order.", Toast.LENGTH_SHORT).show());
                 })
