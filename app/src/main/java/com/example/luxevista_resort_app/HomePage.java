@@ -18,11 +18,15 @@ import com.example.luxevista_resort_app.databinding.ActivityHomePageBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServiceClickListener, SuiteAdapter.OnSuiteClickListener {
+public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServiceClickListener, SuiteAdapter.OnSuiteClickListener, FilterBottomSheetFragment.FilterListener {
 
     private ActivityHomePageBinding binding;
+    private SuiteAdapter suiteAdapter;
+    private final List<Suite> allSuites = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,52 +105,62 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
 
     //Suite Displaying and Managing Methods
     private void setupSuitesViewPager() {
-        List<Suite> suites = new ArrayList<>();
-        suites.add(new Suite("Oceanfront Suite",
+        allSuites.clear();
+        allSuites.add(new Suite("Oceanfront Suite",
                 R.drawable.img_oceanview_suite,
-                "$950/night",
+                950,
                 List.of(
                         "Experience breathtaking, panoramic vistas of the sparkling ocean from your expansive private terrace.",
                         "Designed for ultimate relaxation, this suite blurs the lines between its luxurious interior and the natural beauty outside.",
                         "Features plush, oversized modular seating perfect for lounging, entertaining, or simply soaking in the serene coastal atmosphere.",
-                        "Adorned with natural materials, a soothing neutral palette, and thoughtful touches like a woven pendant light, creating a sophisticated yet relaxed beach house feel.")
+                        "Adorned with natural materials, a soothing neutral palette, and thoughtful touches like a woven pendant light, creating a sophisticated yet relaxed beach house feel."),
+                "Suite",
+                false
         ));
-        suites.add(new Suite("Executive Suite",
+        allSuites.add(new Suite("Executive Suite",
                 R.drawable.img_dulexe_suite_2,
-                "$450/night",
+                450,
                 List.of(
                         "Experience modern luxury in this meticulously designed suite, featuring a minimalist aesthetic with clean lines and premium materials.",
                         "Unwind on a plush, low-profile king bed dressed in high-thread-count linens for an exceptional night's sleep.",
                         "The room boasts a perfectly balanced layout, with designer pendant lighting and matching bedside tables creating a harmonious and calming atmosphere.",
-                        "Luxury en-suite bathroom featuring a rainfall shower, designer toiletries, and soft bathrobes.")
+                        "Luxury en-suite bathroom featuring a rainfall shower, designer toiletries, and soft bathrobes."),
+                "Suite",
+                false
         ));
-        suites.add(new Suite("Deluxe Suite",
+        allSuites.add(new Suite("Deluxe Suite",
                 R.drawable.img_dulexe_suite,
-                "$375/night",
+                375,
                 List.of(
                         "This suite offers a classic and refined decor, featuring rich wood furnishings and a soothing, neutral color palette.",
                         "Sink into our signature king bed with a stately upholstered headboard and crisp, white linens.",
                         "Large windows, dressed with both sheer and blackout curtains, allow for beautiful natural light or complete privacy.",
-                        "This room is perfect for travelers who appreciate traditional luxury and a cozy, inviting atmosphere.")
+                        "This room is perfect for travelers who appreciate traditional luxury and a cozy, inviting atmosphere."),
+                "Suite",
+                false
         ));
-        suites.add(new Suite("Sunlit Double Room",
+        allSuites.add(new Suite("Sunlit Double Room",
                 R.drawable.img_double_br,
-                "$310/night",
+                310,
                 List.of(
                         "Bright, airy, and filled with natural elements, this room is designed for relaxation and rejuvenation.",
                         "The room is centered around a beautifully crafted, light-wood bed frame with soft, neutral-toned bedding.",
-                        "Expansive windows allow sunlight to pour in, creating a warm and uplifting environment throughout the day.")
+                        "Expansive windows allow sunlight to pour in, creating a warm and uplifting environment throughout the day."),
+                "Room",
+                false
         ));
-        suites.add(new Suite("Superior Queen Room",
+        allSuites.add(new Suite("Superior Queen Room",
                 R.drawable.img_standard_suite,
-                "$250/night",
+                250,
                 List.of(
                         "This room combines minimalist design with classic European architectural details",
                         "Features a comfortable, low-profile upholstered queen bed with a relaxed, layered throw blanket.",
-                        "The intimate and thoughtfully curated space feels more like a private Parisian apartment than a hotel room.")
+                        "The intimate and thoughtfully curated space feels more like a private Parisian apartment than a hotel room."),
+                "Room",
+                false
         ));
 
-        SuiteAdapter suiteAdapter = new SuiteAdapter(suites, this);
+        suiteAdapter = new SuiteAdapter(new ArrayList<>(allSuites), this);
         binding.suitesViewPager.setAdapter(suiteAdapter);
 
         binding.suitesViewPager.setClipToPadding(false);
@@ -163,18 +177,57 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
 
         binding.suitesViewPager.setPageTransformer(compositeTransformer);
 
-        binding.textViewSuitesTitle.setText(suites.get(0).getName());
+        binding.textViewSuitesTitle.setText(allSuites.get(0).getName());
 
         binding.suitesViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
 
-                Suite currentSuite = suites.get(position);
-
-                binding.textViewSuitesTitle.setText(currentSuite.getName());
+                if (position >= 0 && position < suiteAdapter.getSuiteList().size()) {
+                    Suite currentSuite = suiteAdapter.getSuiteList().get(position);
+                    binding.textViewSuitesTitle.setText(currentSuite.getName());
+                }
             }
         });
+        if (!allSuites.isEmpty()) {
+            binding.textViewSuitesTitle.setText(allSuites.get(0).getName());
+        }
+    }
+
+    @Override
+    public void onFiltersApplied(String sortBy, boolean showAvailableOnly, List<String> selectedTypes) {
+        List<Suite> filteredList = new ArrayList<>(allSuites);
+
+        // --- APPLY FILTERS ---
+        // Filter by availability
+        if (showAvailableOnly) {
+            filteredList = filteredList.stream()
+                    .filter(Suite::isAvailable)
+                    .collect(Collectors.toList());
+        }
+        // Filter by room type
+        if (!selectedTypes.isEmpty()) {
+            filteredList = filteredList.stream()
+                    .filter(suite -> selectedTypes.contains(suite.getType()))
+                    .collect(Collectors.toList());
+        }
+
+        // --- APPLY SORTING ---
+        if ("price_asc".equals(sortBy)) {
+            Collections.sort(filteredList, (s1, s2) -> Integer.compare(s1.getPrice(), s2.getPrice()));
+        } else if ("price_desc".equals(sortBy)) {
+            Collections.sort(filteredList, (s1, s2) -> Integer.compare(s2.getPrice(), s1.getPrice()));
+        }
+
+
+        suiteAdapter.updateSuites(filteredList);
+        if (!filteredList.isEmpty()) {
+            binding.textViewSuitesTitle.setText(filteredList.get(0).getName());
+            binding.suitesViewPager.setCurrentItem(0, false);
+        } else {
+            binding.textViewSuitesTitle.setText("No rooms match your criteria");
+        }
     }
 
     public void onSuiteClick(Suite suite) {
@@ -185,15 +238,15 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
     }
 
     private void setupClickListeners() {
-        binding.navSettingsIcon.setOnClickListener(v ->
-                Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show());
-
-        binding.navHomeIcon.setOnClickListener(v ->
-                Toast.makeText(this, "Home clicked!", Toast.LENGTH_SHORT).show());
 
         binding.navBookingsIcon.setOnClickListener(v -> {
             Intent intent = new Intent(this, MyOrdersActivity.class);
             startActivity(intent);
+        });
+
+        binding.navSettingsIcon.setOnClickListener(v -> {
+            FilterBottomSheetFragment filterSheet = new FilterBottomSheetFragment();
+            filterSheet.show(getSupportFragmentManager(), filterSheet.getTag());
         });
 
         binding.imageViewProfile.setOnClickListener(v -> {

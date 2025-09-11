@@ -50,7 +50,7 @@ public class SuiteDetailActivity extends AppCompatActivity {
     private void populateUi() {
         binding.suiteDetailImage.setImageResource(suite.getImageResId());
         binding.suiteNameText.setText(suite.getName());
-        binding.suitePriceText.setText(suite.getPrice());
+        binding.suitePriceText.setText("$" + suite.getPrice() + "/night");
 
         StringBuilder featuresBuilder = new StringBuilder();
         List<String> features = suite.getFeatures();

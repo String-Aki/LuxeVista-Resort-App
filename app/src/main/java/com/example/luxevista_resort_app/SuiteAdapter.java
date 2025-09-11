@@ -95,4 +95,14 @@ public class SuiteAdapter extends RecyclerView.Adapter<SuiteAdapter.SuiteViewHol
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+
+    public List<Suite> getSuiteList() {
+        return suiteList;
+    }
+    public void updateSuites(List<Suite> newSuiteList) {
+        this.suiteList.clear();
+        this.suiteList.addAll(newSuiteList);
+        notifyDataSetChanged();
+    }
+
 }
