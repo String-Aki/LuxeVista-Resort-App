@@ -253,6 +253,11 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
             ProfileBottomSheetFragment profileSheet = new ProfileBottomSheetFragment();
             profileSheet.show(getSupportFragmentManager(), profileSheet.getTag());
         });
+
+        binding.imageViewNotification.setOnClickListener(v -> {
+            NotificationsDialogFragment notificationsDialog = new NotificationsDialogFragment();
+            notificationsDialog.show(getSupportFragmentManager(), "notifications_dialog");
+        });
     }
 }
 
