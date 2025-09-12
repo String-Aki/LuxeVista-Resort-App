@@ -62,38 +62,62 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
         Task<QuerySnapshot> reservationsTask = db.collection("reservations").whereEqualTo("userId", userId).get();
 
         Tasks.whenAllSuccess(bookingsTask, reservationsTask).addOnSuccessListener(results -> {
-            List<Object> combinedList = new ArrayList<>();
+            // 1. Create separate lists for active and history items
+            List<Order> activeSuiteBookings = new ArrayList<>();
+            List<Order> activeInhouseReservations = new ArrayList<>();
+            List<Order> historyItems = new ArrayList<>();
 
             // Process bookings result
             QuerySnapshot bookingsSnapshot = (QuerySnapshot) results.get(0);
-            if (!bookingsSnapshot.isEmpty()) {
-                combinedList.add("Suite Bookings");
-                for (DocumentSnapshot document : bookingsSnapshot.getDocuments()) {
-                    Booking booking = document.toObject(Booking.class);
-                    if (booking != null) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
-                        String dateRange = sdf.format(booking.getCheckInDate()) + " - " + sdf.format(booking.getCheckOutDate());
-                        Order order = new Order(booking.getSuiteName(), dateRange, "", booking.getImageResId(), booking.getStatus());
-                        order.setDocumentId(document.getId());
-                        order.setOrderType("bookings");
-                        combinedList.add(order);
+            for (DocumentSnapshot document : bookingsSnapshot.getDocuments()) {
+                Booking booking = document.toObject(Booking.class);
+                if (booking != null) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
+                    String dateRange = sdf.format(booking.getCheckInDate()) + " - " + sdf.format(booking.getCheckOutDate());
+                    Order order = new Order(booking.getSuiteName(), dateRange, "", booking.getImageResId(), booking.getStatus());
+                    order.setDocumentId(document.getId());
+                    order.setOrderType("bookings");
+
+                    // 2. Sort into the correct list based on status
+                    if ("Completed".equalsIgnoreCase(booking.getStatus()) || "Cancelled".equalsIgnoreCase(booking.getStatus())) {
+                        historyItems.add(order);
+                    } else {
+                        activeSuiteBookings.add(order);
                     }
                 }
             }
 
             // Process reservations result
             QuerySnapshot reservationsSnapshot = (QuerySnapshot) results.get(1);
-            if (!reservationsSnapshot.isEmpty()) {
-                combinedList.add("In-house Reservations");
-                for (DocumentSnapshot document : reservationsSnapshot.getDocuments()) {
-                    Reservation reservation = document.toObject(Reservation.class);
-                    if (reservation != null) {
-                        Order order = new Order(reservation.getServiceName(), "Today", "", reservation.getImageResId(), reservation.getStatus());
-                        order.setDocumentId(document.getId());
-                        order.setOrderType("reservations");
-                        combinedList.add(order);
+            for (DocumentSnapshot document : reservationsSnapshot.getDocuments()) {
+                Reservation reservation = document.toObject(Reservation.class);
+                if (reservation != null) {
+                    Order order = new Order(reservation.getServiceName(), "Today", "", reservation.getImageResId(), reservation.getStatus());
+                    order.setDocumentId(document.getId());
+                    order.setOrderType("reservations");
+
+                    // 2. Sort into the correct list based on status
+                    if ("Completed".equalsIgnoreCase(reservation.getStatus()) || "Cancelled".equalsIgnoreCase(reservation.getStatus())) {
+                        historyItems.add(order);
+                    } else {
+                        activeInhouseReservations.add(order);
                     }
                 }
+            }
+
+            // 3. Build the final combined list for the adapter
+            List<Object> combinedList = new ArrayList<>();
+            if (!activeSuiteBookings.isEmpty()) {
+                combinedList.add("Active Suite Bookings");
+                combinedList.addAll(activeSuiteBookings);
+            }
+            if (!activeInhouseReservations.isEmpty()) {
+                combinedList.add("Active In-house Reservations");
+                combinedList.addAll(activeInhouseReservations);
+            }
+            if (!historyItems.isEmpty()) {
+                combinedList.add("History");
+                combinedList.addAll(historyItems);
             }
 
             updateEmptyState(combinedList.isEmpty());

@@ -22,15 +22,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageViewProfile"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:id="@+id/imageViewNotification"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginEnd="24dp"
-        android:src="@drawable/ico_user"
+        android:src="@drawable/ico_bell"
         app:layout_constraintBottom_toBottomOf="@+id/textViewLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewLogo"
-        android:contentDescription="Profile Icon" />
+        android:contentDescription="Bell Icon" />
 
     <TextView
         android:id="@+id/textViewServicesTitle"
@@ -80,8 +80,10 @@
         android:paddingHorizontal="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSuitesTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewSuitesTitle"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomNavCard"
@@ -125,6 +127,15 @@
                 android:alpha="0.5"
                 android:src="@drawable/ico_calendar"
                 android:contentDescription="Bookings Icon"/>
+
+            <ImageView
+                android:id="@+id/imageViewProfile"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="28dp"
+                android:alpha="0.5"
+                android:contentDescription="Profile Icon"
+                android:src="@drawable/ico_user" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
