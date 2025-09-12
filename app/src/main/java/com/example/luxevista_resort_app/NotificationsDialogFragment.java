@@ -6,27 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.example.luxevista_resort_app.databinding.DialogNotificationsBinding;
-import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationsDialogFragment extends DialogFragment {
 
     private DialogNotificationsBinding binding;
+    private FirebaseFirestore db;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Apply our custom style for the animations
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.TopSlideDialogAnimation);
     }
 
@@ -34,6 +31,7 @@ public class NotificationsDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogNotificationsBinding.inflate(inflater, container, false);
+        db = FirebaseFirestore.getInstance(); // Initialize Firestore
         return binding.getRoot();
     }
 
@@ -52,15 +50,30 @@ public class NotificationsDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.closeButton.setOnClickListener(v -> {
-            dismiss(); // dismiss() is the standard way to close a DialogFragment
-        });
+        binding.closeButton.setOnClickListener(v -> dismiss());
 
-        List<Notification> notifications = new ArrayList<>();
-        notifications.add(new Notification("Booking Confirmed!", "Your reservation for the Oceanfront Suite is confirmed.", "2 hours ago"));
-        notifications.add(new Notification("Spa Appointment Reminder", "Your massage appointment is tomorrow at 10:00 AM.", "1 day ago"));
-        notifications.add(new Notification("Special Offer", "Enjoy 20% off at our Fine Dining restaurant this weekend.", "3 days ago"));
+        // Fetch notifications from the database
+        fetchNotifications();
+    }
 
+    private void fetchNotifications() {
+        db.collection("notifications")
+                .orderBy("timestamp", Query.Direction.DESCENDING) // Show newest notifications first
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        Toast.makeText(getContext(), "No notifications found.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        List<Notification> notifications = queryDocumentSnapshots.toObjects(Notification.class);
+                        setupRecyclerView(notifications);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to load notifications.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void setupRecyclerView(List<Notification> notifications) {
         NotificationAdapter adapter = new NotificationAdapter(notifications);
         binding.notificationsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.notificationsRecyclerView.setAdapter(adapter);

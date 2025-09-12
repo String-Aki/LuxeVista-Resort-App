@@ -5,7 +5,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.luxevista_resort_app.databinding.ItemNotificationBinding;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
@@ -43,7 +46,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         void bind(Notification notification) {
             binding.notificationTitle.setText(notification.getTitle());
             binding.notificationMessage.setText(notification.getMessage());
-            binding.notificationTimestamp.setText(notification.getTimestamp());
+            if (notification.getTimestamp() != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, hh:mm a", Locale.getDefault());
+                binding.notificationTimestamp.setText(sdf.format(notification.getTimestamp()));
+            } else {
+                binding.notificationTimestamp.setText(""); // Hide if no timestamp
+            }
         }
     }
 }

@@ -1,16 +1,19 @@
 package com.example.luxevista_resort_app;
 
+import com.google.firebase.firestore.ServerTimestamp;
+import java.util.Date;
+
 public class Notification {
-    private final String title;
-    private final String message;
-    private final String timestamp;
+    // Fields are no longer final
+    private String title;
+    private String message;
+    @ServerTimestamp // This will be automatically populated by Firestore
+    private Date timestamp;
 
-    public Notification(String title, String message, String timestamp) {
-        this.title = title;
-        this.message = message;
-        this.timestamp = timestamp;
-    }
+    // IMPORTANT: A public no-argument constructor is required for Firestore.
+    public Notification() {}
 
+    // --- Getters for all the fields ---
     public String getTitle() {
         return title;
     }
@@ -19,7 +22,7 @@ public class Notification {
         return message;
     }
 
-    public String getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 }
