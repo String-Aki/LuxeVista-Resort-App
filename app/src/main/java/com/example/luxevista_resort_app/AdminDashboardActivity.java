@@ -54,7 +54,10 @@ public class AdminDashboardActivity extends AppCompatActivity implements AdminOp
             // Use a Toast for now. Later, we can navigate to different screens.
             Toast.makeText(this, option.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
 
-            if ("Send Notifications".equals(option.getTitle())) {
+            if ("Approve Reservations".equals(option.getTitle())) {
+                Intent intent = new Intent(this, ApproveReservationsActivity.class);
+                startActivity(intent);
+            } else if ("Send Notifications".equals(option.getTitle())) {
                 Intent intent = new Intent(this, SendNotificationActivity.class);
                 startActivity(intent);
             } else {
