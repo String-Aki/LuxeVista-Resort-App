@@ -1,47 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     tools:context=".AdminDashboardActivity">
 
     <TextView
+        android:id="@+id/helloAdminText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="120dp"
         android:paddingHorizontal="24dp"
+        android:layout_height="wrap_content"
         android:text="Hello Admin,"
-        android:textSize="20sp" />
+        android:paddingTop="80dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/dashboardTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LuxeVista Dashboard"
-        android:paddingHorizontal="24dp"
         android:textColor="@android:color/black"
+        android:paddingHorizontal="24dp"
         android:textSize="34sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/helloAdminText" />
+
+    <ImageButton
+        android:id="@+id/signOutButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Sign Out"
+        android:src="@drawable/ico_sign_out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/promptText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:text="Here are some things you can do:"
-        android:textSize="16sp" />
+        android:paddingHorizontal="24dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dashboardTitleText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/adminOptionsRecyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_weight="1"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/promptText"
         app:spanCount="2"
         tools:listitem="@layout/item_admin_option" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

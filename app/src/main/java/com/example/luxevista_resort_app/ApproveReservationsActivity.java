@@ -45,12 +45,21 @@ public class ApproveReservationsActivity extends AppCompatActivity implements Re
         });
         db = FirebaseFirestore.getInstance();
         setupRecyclerView();
+        setupClickListeners();
         fetchAllReservationsAndUsers();
     }
     private void setupRecyclerView() {
         binding.reservationsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ReservationAdminAdapter(reservationList, this);
         binding.reservationsRecyclerView.setAdapter(adapter);
+    }
+
+    private void setupClickListeners() {
+        binding.backButton.setOnClickListener(v -> {
+            // The finish() method closes the current activity and returns
+            // to the screen that opened it (the Admin Dashboard).
+            finish();
+        });
     }
 
     private void fetchAllReservationsAndUsers() {

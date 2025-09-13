@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.luxevista_resort_app.databinding.ActivityAdminDashboardBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class AdminDashboardActivity extends AppCompatActivity implements AdminOptionAdapter.OnAdminOptionClickListener {
 
     private ActivityAdminDashboardBinding binding;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,22 @@ public class AdminDashboardActivity extends AppCompatActivity implements AdminOp
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        mAuth = FirebaseAuth.getInstance();
         setupRecyclerView();
+        setupClickListeners();
+    }
+    private void setupClickListeners() {
+        binding.signOutButton.setOnClickListener(v -> {
+            // Sign the user out of Firebase
+            mAuth.signOut();
+            Toast.makeText(this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+
+            // Navigate back to the login screen and clear all previous activities
+            Intent intent = new Intent(this, login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
     }
         private void setupRecyclerView() {
             // 2. Create the list of admin options.
