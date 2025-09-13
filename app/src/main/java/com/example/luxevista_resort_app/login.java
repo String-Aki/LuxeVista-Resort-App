@@ -21,11 +21,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.luxevista_resort_app.databinding.ActivityLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class login extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private FirebaseAuth mAuth;
+
+    private static final String ADMIN_EMAIL = "admin@luxevista.com";
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -155,10 +158,20 @@ public class login extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(login.this, HomePage.class);
-                startActivity(intent);
-                finish();
-        }
+
+                // 3. Check if the logged-in user is the admin.
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user != null && ADMIN_EMAIL.equals(user.getEmail())) {
+                    // It's the admin, navigate to Admin Dashboard.
+                    Intent intent = new Intent(login.this, AdminDashboardActivity.class);
+                    startActivity(intent);
+                } else {
+                    // It's a regular user, navigate to the Home Page.
+                    Intent intent = new Intent(login.this, HomePage.class);
+                    startActivity(intent);
+                }
+                finish(); // Finish the login activity in both cases.
+            }
             else
             {
                 Toast.makeText(getApplicationContext(), "Login failed! Please check your credentials.", Toast.LENGTH_LONG).show();

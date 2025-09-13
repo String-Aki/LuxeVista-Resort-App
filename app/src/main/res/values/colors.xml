@@ -6,4 +6,9 @@
     <color name="transparent">#00000000</color>
     <color name="hint_color">#808080</color>
     <color name="field_bg">#A5FFFFFF</color>
+
+    <color name="admin_card_color_1">#f6f5fd</color>
+    <color name="admin_card_color_2">#d9eada</color>
+    <color name="admin_card_color_3">#fff9f1</color>
+    <color name="admin_card_color_4">#f3f4f6</color>
 </resources>
