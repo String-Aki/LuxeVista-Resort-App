@@ -1,5 +1,6 @@
 package com.example.luxevista_resort_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -48,17 +49,16 @@ public class AdminDashboardActivity extends AppCompatActivity implements AdminOp
             binding.adminOptionsRecyclerView.setAdapter(adapter);
         }
 
-        // 4. This method is required by the interface we implemented.
-        // It will be called when an admin option card is clicked.
         @Override
         public void onAdminOptionClick(AdminOption option) {
             // Use a Toast for now. Later, we can navigate to different screens.
             Toast.makeText(this, option.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
 
-            // Example of future navigation:
-            // if ("Send Notifications".equals(option.getTitle())) {
-            //     Intent intent = new Intent(this, SendNotificationActivity.class);
-            //     startActivity(intent);
-            // }
+            if ("Send Notifications".equals(option.getTitle())) {
+                Intent intent = new Intent(this, SendNotificationActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, option.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
+            }
         }
     }

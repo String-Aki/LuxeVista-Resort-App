@@ -25,4 +25,12 @@ public class Notification {
     public Date getTimestamp() {
         return timestamp;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
