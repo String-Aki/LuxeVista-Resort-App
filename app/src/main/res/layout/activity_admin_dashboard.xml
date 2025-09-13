@@ -37,6 +37,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Sign Out"
         android:src="@drawable/ico_sign_out"

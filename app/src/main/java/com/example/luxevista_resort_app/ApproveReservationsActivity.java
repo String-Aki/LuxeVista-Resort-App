@@ -1,6 +1,7 @@
 package com.example.luxevista_resort_app;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -106,11 +107,25 @@ public class ApproveReservationsActivity extends AppCompatActivity implements Re
             // 4. Notify the adapter ONE time, after all data is processed.
             adapter.notifyDataSetChanged();
 
+            updateEmptyState();
+
         }).addOnFailureListener(e -> {
             Toast.makeText(this, "Failed to load reservations.", Toast.LENGTH_SHORT).show();
+            updateEmptyState();
         });
     }
 
+    private void updateEmptyState() {
+        if (adapter.getItemCount() == 0) {
+            // If the list is empty, show the message and hide the list
+            binding.emptyStateText.setVisibility(View.VISIBLE);
+            binding.reservationsRecyclerView.setVisibility(View.GONE);
+        } else {
+            // If the list has items, hide the message and show the list
+            binding.emptyStateText.setVisibility(View.GONE);
+            binding.reservationsRecyclerView.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     public void onApprove(AdminReservationItem item) {
