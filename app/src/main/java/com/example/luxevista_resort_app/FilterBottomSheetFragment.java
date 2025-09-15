@@ -25,7 +25,6 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        // 2. Connect the listener to the hosting Activity (HomePage)
         if (context instanceof FilterListener) {
             listener = (FilterListener) context;
         } else {

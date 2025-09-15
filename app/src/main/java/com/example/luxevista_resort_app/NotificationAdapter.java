@@ -50,7 +50,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, hh:mm a", Locale.getDefault());
                 binding.notificationTimestamp.setText(sdf.format(notification.getTimestamp()));
             } else {
-                binding.notificationTimestamp.setText(""); // Hide if no timestamp
+                binding.notificationTimestamp.setText("");
             }
         }
     }

@@ -1,10 +1,7 @@
 package com.example.luxevista_resort_app;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.luxevista_resort_app.databinding.ItemAdminOptionBinding;
@@ -12,7 +9,6 @@ import java.util.List;
 
 public class AdminOptionAdapter extends RecyclerView.Adapter<AdminOptionAdapter.AdminOptionViewHolder> {
 
-    // An interface to handle clicks on the admin options.
     public interface OnAdminOptionClickListener {
         void onAdminOptionClick(AdminOption option);
     }
@@ -28,7 +24,6 @@ public class AdminOptionAdapter extends RecyclerView.Adapter<AdminOptionAdapter.
     @NonNull
     @Override
     public AdminOptionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the layout using View Binding
         ItemAdminOptionBinding binding = ItemAdminOptionBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new AdminOptionViewHolder(binding);
     }
@@ -58,7 +53,6 @@ public class AdminOptionAdapter extends RecyclerView.Adapter<AdminOptionAdapter.
 
             binding.optionDescription.setText(option.getDescription());
 
-            // ADD THIS LINE to set the card's background color
             binding.getRoot().setCardBackgroundColor(itemView.getContext().getResources().getColor(option.getColorResId()));
 
             itemView.setOnClickListener(v -> listener.onAdminOptionClick(option));

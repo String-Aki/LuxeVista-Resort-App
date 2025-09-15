@@ -20,6 +20,7 @@ public class Order implements Serializable {
         this.status = status;
     }
 
+    //Getters
     public String getName() {
         return name;
     }
@@ -47,7 +48,7 @@ public class Order implements Serializable {
         return orderType;
     }
 
-    // --- Setters ---
+    //Setters
     public void setDocumentId(String documentId) { this.documentId = documentId; }
     public void setOrderType(String orderType) { this.orderType = orderType; }
 }

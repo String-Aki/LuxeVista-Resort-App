@@ -33,7 +33,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/drw_res_blur_gradient"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="18dp">
 
 
             <TextView
@@ -62,10 +62,10 @@
             <Button
                 android:id="@+id/Explore_Btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#1aFFFFFF"
+                android:backgroundTint="@color/transparent"
                 app:strokeColor="@color/white"
                 app:strokeWidth="2dp"
                 android:fontFamily="@font/playfairdisplay_bold"

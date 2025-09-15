@@ -31,14 +31,13 @@ public class NotificationsDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogNotificationsBinding.inflate(inflater, container, false);
-        db = FirebaseFirestore.getInstance(); // Initialize Firestore
+        db = FirebaseFirestore.getInstance();
         return binding.getRoot();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // This logic makes the dialog appear at the top of the screen
         Window window = getDialog().getWindow();
         if (window != null) {
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -52,13 +51,12 @@ public class NotificationsDialogFragment extends DialogFragment {
 
         binding.closeButton.setOnClickListener(v -> dismiss());
 
-        // Fetch notifications from the database
         fetchNotifications();
     }
 
     private void fetchNotifications() {
         db.collection("notifications")
-                .orderBy("timestamp", Query.Direction.DESCENDING) // Show newest notifications first
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.isEmpty()) {

@@ -4,24 +4,40 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.OutcomeReceiver;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.credentials.CredentialManager;
+import androidx.credentials.CredentialManagerCallback;
+import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialResponse;
+import androidx.credentials.exceptions.GetCredentialException;
 
 import com.example.luxevista_resort_app.databinding.ActivityLoginBinding;
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class login extends AppCompatActivity {
 
@@ -48,10 +64,7 @@ public class login extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 loginUser();
-                //Intent intent = new Intent(login.this, HomePage.class);
-                //startActivity(intent);
             }
         });
 
@@ -83,8 +96,6 @@ public class login extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
     private void showForgotPasswordDialog() {
@@ -159,18 +170,15 @@ public class login extends AppCompatActivity {
             if (task.isSuccessful()) {
                 Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
 
-                // 3. Check if the logged-in user is the admin.
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null && ADMIN_EMAIL.equals(user.getEmail())) {
-                    // It's the admin, navigate to Admin Dashboard.
                     Intent intent = new Intent(login.this, AdminDashboardActivity.class);
                     startActivity(intent);
                 } else {
-                    // It's a regular user, navigate to the Home Page.
                     Intent intent = new Intent(login.this, HomePage.class);
                     startActivity(intent);
                 }
-                finish(); // Finish the login activity in both cases.
+                finish();
             }
             else
             {

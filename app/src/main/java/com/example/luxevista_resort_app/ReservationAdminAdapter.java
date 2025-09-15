@@ -57,7 +57,6 @@ public class ReservationAdminAdapter extends RecyclerView.Adapter<ReservationAdm
             binding.approveButton.setOnClickListener(v -> listener.onApprove(item));
             binding.declineButton.setOnClickListener(v -> listener.onDecline(item));
 
-            // Hide buttons if the status is not "Pending"
             if (!"Pending".equalsIgnoreCase(item.getStatus())) {
                 binding.approveButton.setVisibility(View.GONE);
                 binding.declineButton.setVisibility(View.GONE);

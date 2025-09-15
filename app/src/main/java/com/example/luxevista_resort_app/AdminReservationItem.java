@@ -1,9 +1,8 @@
 package com.example.luxevista_resort_app;
 
-// This is a helper class to combine Booking and Reservation data for the admin UI.
 public class AdminReservationItem {
     private final String documentId;
-    private final String collectionName; // "bookings" or "reservations"
+    private final String collectionName;
     private final String itemName;
     private final String userFullName;
     private final String dateDetails;
@@ -26,6 +25,6 @@ public class AdminReservationItem {
     public String getDateDetails() { return dateDetails; }
     public String getStatus() { return status; }
 
-    // Setter for status
+    //Setters
     public void setStatus(String status) { this.status = status; }
 }

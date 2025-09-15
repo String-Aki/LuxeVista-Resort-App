@@ -62,12 +62,10 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
         Task<QuerySnapshot> reservationsTask = db.collection("reservations").whereEqualTo("userId", userId).get();
 
         Tasks.whenAllSuccess(bookingsTask, reservationsTask).addOnSuccessListener(results -> {
-            // 1. Create separate lists for active and history items
             List<Order> activeSuiteBookings = new ArrayList<>();
             List<Order> activeInhouseReservations = new ArrayList<>();
             List<Order> historyItems = new ArrayList<>();
 
-            // Process bookings result
             QuerySnapshot bookingsSnapshot = (QuerySnapshot) results.get(0);
             for (DocumentSnapshot document : bookingsSnapshot.getDocuments()) {
                 Booking booking = document.toObject(Booking.class);
@@ -78,7 +76,6 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
                     order.setDocumentId(document.getId());
                     order.setOrderType("bookings");
 
-                    // 2. Sort into the correct list based on status
                     if ("Completed".equalsIgnoreCase(booking.getStatus()) || "Cancelled".equalsIgnoreCase(booking.getStatus())) {
                         historyItems.add(order);
                     } else {
@@ -87,7 +84,6 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
                 }
             }
 
-            // Process reservations result
             QuerySnapshot reservationsSnapshot = (QuerySnapshot) results.get(1);
             for (DocumentSnapshot document : reservationsSnapshot.getDocuments()) {
                 Reservation reservation = document.toObject(Reservation.class);
@@ -96,7 +92,6 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
                     order.setDocumentId(document.getId());
                     order.setOrderType("reservations");
 
-                    // 2. Sort into the correct list based on status
                     if ("Completed".equalsIgnoreCase(reservation.getStatus()) || "Cancelled".equalsIgnoreCase(reservation.getStatus())) {
                         historyItems.add(order);
                     } else {
@@ -105,7 +100,6 @@ public class MyOrdersActivity extends AppCompatActivity implements OrderAdapter.
                 }
             }
 
-            // 3. Build the final combined list for the adapter
             List<Object> combinedList = new ArrayList<>();
             if (!activeSuiteBookings.isEmpty()) {
                 combinedList.add("Active Suite Bookings");

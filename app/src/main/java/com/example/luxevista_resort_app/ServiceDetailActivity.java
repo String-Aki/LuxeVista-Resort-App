@@ -83,7 +83,6 @@ public class ServiceDetailActivity extends AppCompatActivity {
         });
 
         binding.reserveButton.setOnClickListener(v -> {
-            //Toast.makeText(this, "Reservation feature coming soon!", Toast.LENGTH_SHORT).show();
             makeReservation();
         });
     }

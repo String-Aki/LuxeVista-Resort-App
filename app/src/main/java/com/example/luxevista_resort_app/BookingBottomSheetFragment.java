@@ -83,7 +83,6 @@ public class BookingBottomSheetFragment extends BottomSheetDialogFragment {
                 checkInDate = selectedDate;
                 binding.selectedDateText.setText("Selected Check-in: " + formatDate(checkInDate));
                 binding.calendarView.setMinDate(checkInDate + 86400000);
-                //binding.suiteNameTitle.setText("Select Check-out Date");
             } else if (checkOutDate == 0) {
                 if (selectedDate > checkInDate) {
                     checkOutDate = selectedDate;

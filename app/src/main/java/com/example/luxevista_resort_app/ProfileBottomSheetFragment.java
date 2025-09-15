@@ -235,21 +235,17 @@ public class ProfileBottomSheetFragment extends BottomSheetDialogFragment {
         }
         String userId = currentUser.getUid();
 
-        // Step 1: Delete user data from Firestore
         db.collection("users").document(userId).delete()
                 .addOnSuccessListener(aVoid -> {
-                    // Step 2: If Firestore data is deleted, delete the user from Authentication
                     currentUser.delete()
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getContext(), "Account deleted successfully.", Toast.LENGTH_LONG).show();
-                                    // Navigate back to the login screen
                                     Intent intent = new Intent(getActivity(), login.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                     dismiss();
                                 } else {
-                                    // This often fails if the user hasn't logged in recently
                                     Toast.makeText(getContext(), "Failed to delete account. Please log in again and try immediately.", Toast.LENGTH_LONG).show();
                                 }
                             });

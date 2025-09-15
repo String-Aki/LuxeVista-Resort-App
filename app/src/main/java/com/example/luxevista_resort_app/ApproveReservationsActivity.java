@@ -57,23 +57,18 @@ public class ApproveReservationsActivity extends AppCompatActivity implements Re
 
     private void setupClickListeners() {
         binding.backButton.setOnClickListener(v -> {
-            // The finish() method closes the current activity and returns
-            // to the screen that opened it (the Admin Dashboard).
             finish();
         });
     }
 
     private void fetchAllReservationsAndUsers() {
-        // Create tasks for all three collections
         Task<QuerySnapshot> bookingsTask = db.collection("bookings").get();
         Task<QuerySnapshot> reservationsTask = db.collection("reservations").get();
         Task<QuerySnapshot> usersTask = db.collection("users").get();
 
-        // Wait for all three tasks to complete
         Tasks.whenAllSuccess(bookingsTask, reservationsTask, usersTask).addOnSuccessListener(results -> {
             reservationList.clear();
 
-            // 1. Create a map of user IDs to names for easy lookup
             Map<String, String> userNames = new HashMap<>();
             QuerySnapshot usersSnapshot = (QuerySnapshot) results.get(2);
             for (DocumentSnapshot userDoc : usersSnapshot.getDocuments()) {
@@ -81,7 +76,6 @@ public class ApproveReservationsActivity extends AppCompatActivity implements Re
                 userNames.put(userDoc.getId(), fullName);
             }
 
-            // 2. Process bookings
             QuerySnapshot bookingsSnapshot = (QuerySnapshot) results.get(0);
             for (DocumentSnapshot doc : bookingsSnapshot.getDocuments()) {
                 Booking booking = doc.toObject(Booking.class);
@@ -93,7 +87,6 @@ public class ApproveReservationsActivity extends AppCompatActivity implements Re
                 }
             }
 
-            // 3. Process in-house reservations
             QuerySnapshot reservationsSnapshot = (QuerySnapshot) results.get(1);
             for (DocumentSnapshot doc : reservationsSnapshot.getDocuments()) {
                 Reservation reservation = doc.toObject(Reservation.class);
@@ -104,7 +97,6 @@ public class ApproveReservationsActivity extends AppCompatActivity implements Re
                 }
             }
 
-            // 4. Notify the adapter ONE time, after all data is processed.
             adapter.notifyDataSetChanged();
 
             updateEmptyState();
@@ -117,11 +109,9 @@ public class ApproveReservationsActivity extends AppCompatActivity implements Re
 
     private void updateEmptyState() {
         if (adapter.getItemCount() == 0) {
-            // If the list is empty, show the message and hide the list
             binding.emptyStateText.setVisibility(View.VISIBLE);
             binding.reservationsRecyclerView.setVisibility(View.GONE);
         } else {
-            // If the list has items, hide the message and show the list
             binding.emptyStateText.setVisibility(View.GONE);
             binding.reservationsRecyclerView.setVisibility(View.VISIBLE);
         }

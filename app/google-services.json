@@ -12,7 +12,20 @@
           "package_name": "com.example.luxevista_resort_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "560417961144-1q9vii5rqdm3ch8m5abomvjnka8k87fn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.luxevista_resort_app",
+            "certificate_hash": "f498d80e0be5b074adf7b94aa9691b084764b909"
+          }
+        },
+        {
+          "client_id": "560417961144-d8lgrl6jr57ovkhkgmdnlgtvb0v6u2ot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBGZnJqynV-NLHg7Tvf3Y70KQKG_zZSYRs"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560417961144-d8lgrl6jr57ovkhkgmdnlgtvb0v6u2ot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

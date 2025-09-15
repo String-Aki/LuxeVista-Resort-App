@@ -34,7 +34,7 @@ public class SendNotificationActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         binding.sendNotificationButton.setOnClickListener(v -> sendNotification());
         binding.backButton.setOnClickListener(v -> {
-            finish(); // This will close the current activity
+            finish();
         });
     }
     private void sendNotification() {
@@ -46,7 +46,6 @@ public class SendNotificationActivity extends AppCompatActivity {
             return;
         }
 
-        // Create a new Notification object. The timestamp will be added by the server.
         Notification notification = new Notification();
         notification.setTitle(title);
         notification.setMessage(message);
@@ -54,7 +53,7 @@ public class SendNotificationActivity extends AppCompatActivity {
         db.collection("notifications").add(notification)
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(this, "Notification sent successfully", Toast.LENGTH_SHORT).show();
-                    finish(); // Close the activity and return to the dashboard
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error sending notification: " + e.getMessage(), Toast.LENGTH_SHORT).show();

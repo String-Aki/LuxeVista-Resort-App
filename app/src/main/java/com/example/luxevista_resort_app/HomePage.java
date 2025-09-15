@@ -199,21 +199,17 @@ public class HomePage extends AppCompatActivity implements ServiceAdapter.OnServ
     public void onFiltersApplied(String sortBy, boolean showAvailableOnly, List<String> selectedTypes) {
         List<Suite> filteredList = new ArrayList<>(allSuites);
 
-        // --- APPLY FILTERS ---
-        // Filter by availability
         if (showAvailableOnly) {
             filteredList = filteredList.stream()
                     .filter(Suite::isAvailable)
                     .collect(Collectors.toList());
         }
-        // Filter by room type
         if (!selectedTypes.isEmpty()) {
             filteredList = filteredList.stream()
                     .filter(suite -> selectedTypes.contains(suite.getType()))
                     .collect(Collectors.toList());
         }
 
-        // --- APPLY SORTING ---
         if ("price_asc".equals(sortBy)) {
             Collections.sort(filteredList, (s1, s2) -> Integer.compare(s1.getPrice(), s2.getPrice()));
         } else if ("price_desc".equals(sortBy)) {

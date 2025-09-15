@@ -28,7 +28,7 @@ public class Booking {
         this.imageResId = imageResId;
     }
 
-    // --- Getters ---
+    //Getters
     public String getUserId() { return userId; }
     public String getSuiteName() { return suiteName; }
     public Date getCheckInDate() { return checkInDate; }

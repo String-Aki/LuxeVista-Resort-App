@@ -11,7 +11,6 @@ import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    // 1. Define constants for our view types.
     private static final int TYPE_HEADING = 0;
     private static final int TYPE_ORDER = 1;
 
@@ -19,7 +18,6 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         void onCancelClick(Order order);
     }
 
-    // 2. The adapter now holds a list of generic Objects.
     private final List<Object> items;
     private final OnCancelButtonClickListener listener;
 
@@ -28,7 +26,6 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.listener = listener;
     }
 
-    // 3. This method correctly determines which layout to use for which position.
     @Override
     public int getItemViewType(int position) {
         if (items.get(position) instanceof String) {
@@ -42,11 +39,10 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // 4. Create the correct ViewHolder based on the view type.
         if (viewType == TYPE_HEADING) {
             ItemOrderHeadingBinding binding = ItemOrderHeadingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new HeadingViewHolder(binding);
-        } else { // viewType == TYPE_ORDER
+        } else {
             ItemOrderBinding binding = ItemOrderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new OrderViewHolder(binding);
         }
@@ -54,7 +50,6 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        // 5. Bind the data to the correct ViewHolder by checking the type.
         if (getItemViewType(position) == TYPE_HEADING) {
             String title = (String) items.get(position);
             ((HeadingViewHolder) holder).bind(title);
@@ -66,11 +61,9 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        // 6. Return the size of the combined items list.
         return items.size();
     }
 
-    // --- ViewHolder for the Order items ---
     static class OrderViewHolder extends RecyclerView.ViewHolder {
         private final ItemOrderBinding binding;
 
@@ -97,7 +90,6 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    // 7. NEW: A separate ViewHolder class for the Heading items.
     static class HeadingViewHolder extends RecyclerView.ViewHolder {
         private final ItemOrderHeadingBinding binding;
 

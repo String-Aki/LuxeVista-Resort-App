@@ -136,7 +136,6 @@ public class sign_up extends AppCompatActivity {
                                 finish();
                             }).addOnFailureListener(e -> {
                                 Toast.makeText(getApplicationContext(), "Error saving user details", Toast.LENGTH_LONG).show();
-                                //Log.e("FIRESTORE_ERROR", "Error writing document", e);
                             });
                 } else {
                     Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_LONG).show();
